@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: kubia-proxy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      tier: frontend
+  template:
+    metadata:
+      labels:
+        tier: frontend
+    spec:
+      containers:
+      - name: kubia
+        image: morozandralek/kubia
+        ports:
+        - name: kubia
+          containerPort: 8080
+          protocol: TCP

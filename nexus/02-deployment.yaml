@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nexus
+  namespace: nexus
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nexus-server
+  template:
+    metadata:
+      labels:
+        app: nexus-server
+    spec:
+      containers:
+        - name: nexus
+          image: sonatype/nexus3:latest
+          resources:
+            limits:
+              memory: "2Gi"
+              cpu: "1000m"
+            requests:
+              memory: "1Gi"
+              cpu: "500m"
+          ports:
+            - name: nexus-server
+              containerPort: 8081
+            - name: api
+              containerPort: 5080
+          volumeMounts:
+            - name: nexus-data
+              mountPath: /nexus-data
+      volumes:
+      - name: nexus-data
+        hostPath:
+          path: /opt/data/nexus-data
+          type: DirectoryOrCreate
