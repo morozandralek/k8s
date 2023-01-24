@@ -10,3 +10,17 @@ spec:
     ports:
     - containerPort: 8080
       protocol: TCP
+
+---
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: kubia-manual-v2
+spec:
+  containers:
+  - image: morozandralek/kubia
+    name: kubia-v2
+    ports:
+    - containerPort: 8080
+      protocol: TCP
